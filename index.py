@@ -18,14 +18,16 @@ SPEED = 2
 BULLET_SPEED = 2
 ENEMY_BULLET_SPEED = 10
 
+
 # Setup display
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Dodge the Falling Blocks!")
+screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Create window
+pygame.display.set_caption("Avoid!")  # Window title
+background_img = pygame.image.load("bck.jpg")  # Load background image
+background_img = pygame.transform.scale(
+    background_img, (WIDTH, HEIGHT))  # Scale image
 
-obstacle_img = pygame.image.load("bck.jpg")  # Load image
-obstacle_img = pygame.transform.scale(
-    obstacle_img, (OBSTACLE_SIZE, OBSTACLE_SIZE))  # Scale image
-
+obstacle_img = pygame.Surface((OBSTACLE_SIZE, OBSTACLE_SIZE))
+obstacle_img.fill(RED)
 
 # Player setup
 player = pygame.Rect(WIDTH // 2, HEIGHT - PLAYER_SIZE -
@@ -42,7 +44,8 @@ clock = pygame.time.Clock()
 score = 0
 
 while running:
-    screen.fill(WHITE)
+    screen.blit(background_img, (0, 0))
+
     pygame.time.delay(20)
 
     # Event handling
@@ -54,11 +57,12 @@ while running:
                 bullets.append(pygame.Rect(player.x + PLAYER_SIZE // 2 -
                                BULLET_SIZE // 2, player.y, BULLET_SIZE, BULLET_SIZE))
 
-    # Player movement
+    # **Define keys before using them**
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and player.x > 0:
+    # Player movement
+    if keys[pygame.K_LEFT] and player.x > 0:
         player.x -= SPEED
-    if keys[pygame.K_DOWN] and player.x < WIDTH - PLAYER_SIZE:
+    if keys[pygame.K_RIGHT] and player.x < WIDTH - PLAYER_SIZE:
         player.x += SPEED
 
     # Spawn obstacles
@@ -110,6 +114,7 @@ while running:
     pygame.draw.rect(screen, BLUE, player)
     for obstacle in obstacles:
         screen.blit(obstacle_img, (obstacle.x, obstacle.y))
+
     for bullet in bullets:
         pygame.draw.rect(screen, BLACK, bullet)
     for enemy_bullet in enemy_bullets:
