@@ -21,7 +21,7 @@ ENEMY_BULLET_SPEED = 10
 
 # Setup display
 screen = pygame.display.set_mode((WIDTH, HEIGHT))  # Create window
-pygame.display.set_caption("Avoid!")  # Window title
+pygame.display.set_caption("AGNARIO")  # Window title
 background_img = pygame.image.load("bck.jpg")  # Load background image
 background_img = pygame.transform.scale(
     background_img, (WIDTH, HEIGHT))  # Scale image
@@ -57,7 +57,6 @@ while running:
                 bullets.append(pygame.Rect(player.x + PLAYER_SIZE // 2 -
                                BULLET_SIZE // 2, player.y, BULLET_SIZE, BULLET_SIZE))
 
-    # **Define keys before using them**
     keys = pygame.key.get_pressed()
     # Player movement
     if keys[pygame.K_LEFT] and player.x > 0:
